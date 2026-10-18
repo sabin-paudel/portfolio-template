@@ -1,226 +1,261 @@
 # Portfolio Website Template
 
-A bold, motion-rich personal portfolio template built with Next.js 16, React 19, TypeScript, and Tailwind CSS 4.
+> A modern, animated portfolio template for developers and creatives.
 
-The project ships with dummy placeholder content ("John Doe") so you can clone it, swap in your own data, and deploy your own portfolio in minutes.
+Built with **Next.js 16**, **React 19**, **TypeScript**, **Tailwind CSS 4**, and
+**Framer Motion**. The template is data-driven, so most of the work needed to
+make it your own happens in one file.
 
-## Highlights
+**Created by [Sabin Paudel](https://sabinpaudel.com.np)** ·
+[Visit the original website](https://sabinpaudel.com.np)
 
-- App Router architecture with reusable sections and components
-- Dynamic, animated pages powered by Framer Motion
-- Rich portfolio sections: hero, principles, projects, about, contact
-- Magnetic buttons, mouse glow, scroll progress bar, confetti easter egg
+## What is included
+
+- Responsive home, about, projects, and contact pages
+- Animated UI with Framer Motion
 - Dark theme with lamp-mode toggle
-- Semantic HTML with Schema.org structured data (Person, WebSite, Breadcrumbs, ItemList)
-- Per-page Open Graph images generated at build time with `next/og`
-- Sitemap and robots.txt generated automatically
-- Typed, data-driven content for easy maintenance
+- Hero, principles, featured work, about, and contact sections
+- Project cards with live-demo and GitHub links
+- Semantic HTML and Schema.org structured data
+- Per-page metadata and Open Graph images
+- Automatically generated `sitemap.xml` and `robots.txt`
+- Optional Umami analytics and Google Search Console verification
+- No database or API key required
 
-## Tech Stack
+## Tech stack
 
-| Category   | Technology                          |
-| ---------- | ----------------------------------- |
-| Framework  | Next.js 16 (App Router, Turbopack)  |
-| Runtime/UI | React 19, React DOM 19              |
-| Language   | TypeScript                          |
-| Styling    | Tailwind CSS 4                      |
-| Animation  | Framer Motion                       |
-| Icons      | Lucide React                        |
-| Effects    | canvas-confetti                     |
-| Linting    | ESLint 9 + eslint-config-next       |
+| Category | Technology |
+| --- | --- |
+| Framework | Next.js 16 with App Router |
+| UI | React 19 |
+| Language | TypeScript |
+| Styling | Tailwind CSS 4 |
+| Animation | Framer Motion |
+| Icons | Lucide React |
+| Effects | canvas-confetti |
+| Linting | ESLint 9 |
 
-## Routes
+## Pages
 
-- `/` - Hero + working principles + selected work
-- `/about` - Profile, introduction, work experience, education, skills
-- `/projects` - All selected project cards
-- `/contact` - Contact cards, social links, availability info
+| Route | Content |
+| --- | --- |
+| `/` | Hero, principles, and featured projects |
+| `/about` | Introduction, experience, education, and skills |
+| `/projects` | All projects |
+| `/contact` | Contact details, social links, and availability |
 
----
+## Quick start
 
-## Getting Started
-
-### Prerequisites
+### Requirements
 
 - Node.js 20 or newer
-- npm (or pnpm / yarn / bun if you prefer)
+- npm, pnpm, yarn, or Bun
 
-### Installation
+### Install and run locally
 
 ```bash
-# 1. Clone or download this template
-git clone <your-repo-url> my-portfolio
+git clone <your-repository-url> my-portfolio
 cd my-portfolio
-
-# 2. Install dependencies
 npm install
-
-# 3. (Optional) Set up environment variables
-cp .env.local.example .env.local
-
-# 4. Start the dev server
 npm run dev
 ```
 
-Open http://localhost:3000 in your browser.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Production Build
+The `.env.local` file is optional for local development. To enable optional
+services, copy the example file first:
 
 ```bash
-npm run build
-npm run start
+cp .env.local.example .env.local
 ```
 
----
+## Make it your own
 
-## Customization Guide
+### 1. Edit the portfolio configuration first
 
-### Single source of truth
+Open [`app/lib/config/portfolio.ts`](./app/lib/config/portfolio.ts). This is
+the single source of truth for the portfolio content.
 
-**All content is driven by one file:** `app/lib/config/portfolio.ts`. Edit that single
-config to change your name, role, location, social links, projects, page copy, SEO, and
-Open Graph text. There are no duplicate or hardcoded data files to keep in sync — every
-page, component, layout, sitemap, robots file, and generated OG image reads from this config.
+Update these sections:
 
-Helper modules that consume the config:
+| Section | Change |
+| --- | --- |
+| `url` | Your production URL, including `https://` |
+| `profile` | Your name, role, tagline, location, and availability |
+| `geo` | Your city, country, timezone, flag, and coordinates |
+| `images` | Paths to your hero, about, contact, and fallback images |
+| `seo` | Page title, description, keywords, social profile URLs, and verification token |
+| `contact` | Email address, phone number, and phone visibility |
+| `socials` | Social links, icon names, and tooltips |
+| `hero` | Hero label, heading, and call-to-action buttons |
+| `heroStats` | The three statistics shown on the home page |
+| `principles` | Your working principles |
+| `home` | Home page section headings, descriptions, and buttons |
+| `status` | The status message shown in the site chrome |
+| `navigation` | Navigation labels and links |
+| `footer` | Footer copy, links, sharing title, and copyright name |
+| `projects` | Project details, screenshots, tags, and links |
+| `projectsPage` | Projects page heading, copy, and labels |
+| `aboutPage` | About page copy, experience, education, and skills |
+| `contactPage` | Contact page heading and supporting copy |
 
-| File                       | Purpose                                                              |
-| -------------------------- | ------------------------------------------------------------------- |
-| `app/lib/config/portfolio.ts` | The complete portfolio data (single source of truth)              |
-| `app/lib/icons.ts`         | Maps icon names (strings in the config) to Lucide components        |
-| `app/lib/seo.ts`           | Builds per-page metadata + breadcrumb structured data from config   |
-| `app/types/project.ts`     | Project query helpers (`getProjects`, `getFeaturedProjects`, ...)   |
+You should not need to edit each page separately. The pages, layouts, SEO
+metadata, structured data, sitemap, robots file, and generated Open Graph
+images read from this configuration.
 
-To add or change content, follow these rules:
+### 2. Replace the images
 
-- **Icons** are referenced by string name (e.g. `"github"`, `"ArrowRight"`). Add any new
-  icon name to the registry in `app/lib/icons.ts` (it already includes every icon used by
-  the template).
-- **Projects** live in `portfolio.projects` — add an entry with `title`, `description`,
-  `longDescription`, `role`, `image`, `tags`, `liveUrl`, `githubUrl`, and `featured`.
-- **Social links** live in `portfolio.socials` (name, href, icon name, tooltip).
-- **Page copy** (hero, home sections, about, contact, projects) lives under the matching
-  keys in `portfolio` (e.g. `portfolio.hero`, `portfolio.contactPage`, `portfolio.projectsPage`).
-- **Images** are referenced by path in `portfolio.images` and the project `image` fields.
+Replace the placeholder files with your own images. Keeping the same filenames
+means no configuration changes are needed:
 
-> Note: keep the `image` paths pointing at your own files in `public/projects/` (and
-> `public/heroimage.png`, `public/about.png`, `public/imagecp.png`, `public/picofme.png`).
+| File | Used for |
+| --- | --- |
+| `public/heroimage.png` | Home page hero image |
+| `public/about.png` | About page profile image |
+| `public/imagecp.png` | Contact page image |
+| `public/picofme.png` | SEO and metadata fallback image |
+| `public/projects/*.png` | Project screenshots |
 
-### SEO & Metadata
+If you use different filenames, update the paths in `portfolio.images` and in
+each project’s `image` field. Project screenshots look best in a 16:10 ratio.
 
-All metadata, structured data, `sitemap.ts`, and `robots.ts` are generated from the config.
-Update the `url`, `seo`, `openGraph`, and `socials` sections of `portfolio.ts` — no other
-file needs editing for SEO changes.
+### 3. Update your projects
 
-### Open Graph Images
+Add, remove, or edit entries in `portfolio.projects`. Each project supports:
 
-OG images are rendered from JSX and read their text from the config (profile name, role,
-location, skills, and `openGraph.*` copy). They automatically stay in sync with your data.
+```ts
+{
+  id: "5",
+  title: "My Project",
+  description: "A short description for project cards.",
+  longDescription: "A longer description for the project detail content.",
+  role: "Design and frontend development",
+  image: "/projects/my-project.png",
+  tags: ["Next.js", "TypeScript"],
+  liveUrl: "https://example.com",
+  githubUrl: "https://github.com/your-name/my-project",
+  featured: true,
+}
+```
 
-- `app/opengraph-image.tsx` (home)
-- `app/(pages)/about/opengraph-image.tsx`
-- `app/(pages)/projects/opengraph-image.tsx`
-- `app/(pages)/contact/opengraph-image.tsx`
+Set `githubUrl` to `null` when a project does not have a public repository.
+Set `featured` to `true` to show a project on the home page.
 
-### Replace Images
+### 4. Use the icon registry for icons
 
-Swap these files in `public/` with your own (keep the same filenames to avoid code changes):
+Icon values in `portfolio.ts` are strings, such as `"Github"`,
+`"ArrowRight"`, or `"Briefcase"`. Available icons are registered in
+[`app/lib/icons.tsx`](./app/lib/icons.tsx). If you use an icon that is not
+already registered, add it there before running the build.
 
-| File                    | Used for                              |
-| ----------------------- | ------------------------------------- |
-| `public/heroimage.png`  | Home page hero portrait               |
-| `public/about.png`      | About page profile photo              |
-| `public/imagecp.png`    | Contact page portrait                 |
-| `public/picofme.png`    | SEO fallback image (referenced in config/metadata) |
-| `public/projects/*.png` | Project card screenshots (16:10 works best) |
+### 5. Update branding
 
-### 6. Environment Variables
+| What to change | File |
+| --- | --- |
+| Favicon | `app/icon.svg` |
+| Apple touch icon | `app/apple-icon.png` |
+| Brand colors and visual theme | `app/globals.css` |
+| Package name | `package.json` |
 
-Copy `.env.local.example` to `.env.local` and fill in (both optional):
+## Environment variables
 
-```bash
-# Umami analytics website ID (leave empty to disable analytics script)
+Copy `.env.local.example` to `.env.local` when you want to enable either
+optional integration:
+
+```env
+# Optional: Umami website ID
 UMAMI_ID=
 
-# Google Search Console verification token (leave empty to disable meta tag)
+# Optional: Google Search Console verification token
 GOOGLE_VERIFICATION=
 ```
 
-These are read in `app/layout.tsx` and `app/lib/config/portfolio.ts`. Nothing is required for local development.
+Leave either value empty to disable that integration. Never commit
+`.env.local` or secret values to Git.
 
-### 7. Branding Extras
+## SEO checklist
 
-- Favicon: replace `app/icon.svg` and `app/apple-icon.png`
-- Theme colors: edit CSS variables in `app/globals.css` (`--brand-primary`, `--brand-signal`, etc.)
-- Site name in `package.json` (`"name"` field)
+Before deploying:
 
----
+1. Set `url` to your real production domain.
+2. Replace the default title, description, keywords, and social URLs in `seo`.
+3. Check that every image path points to a file inside `public/`.
+4. Add your Google Search Console token to `.env.local`, if needed.
+5. Run a production build locally.
+6. After deployment, verify:
+   - `https://your-domain.com/sitemap.xml`
+   - `https://your-domain.com/robots.txt`
+   - Page titles, descriptions, and social previews
 
-## Project Structure
+The `url` value is used for canonical URLs, metadata, structured data,
+Open Graph URLs, the sitemap, and robots configuration.
+
+## Available commands
+
+```bash
+npm run dev      # Start the development server
+npm run build    # Create an optimized production build
+npm run start    # Start the production server
+npm run lint     # Run ESLint
+```
+
+Run the checks before deployment:
+
+```bash
+npm run lint
+npm run build
+```
+
+## Project structure
 
 ```text
 app/
-	layout.tsx                # Global shell, fonts, metadata, analytics script
-	page.tsx                  # Home page composition + JSON-LD
-	globals.css               # Tailwind theme, brand colors, effects
-	robots.ts                 # robots.txt generator
-	sitemap.ts                # sitemap.xml generator
-	opengraph-image.tsx       # Home OG image (generated)
-	(pages)/
-		about/                  # About page + layout metadata + OG image
-		projects/               # Projects page + layout metadata + OG image
-		contact/                # Contact page + layout metadata + OG image
-	components/
-		sections/               # Hero, HomeSections
-		layout/                 # Navigation, Footer, SystemBar, MouseGlow
-		ui/                     # OptimizedImage, Tooltip, ThemeToggle, ProgressBar
-		animations/             # MagneticWrapper
-	lib/
-		config/portfolio.ts     # Central portfolio config — single source of truth
-		icons.ts                # Icon name → Lucide component registry
-		seo.ts                  # Per-page metadata + breadcrumb JSON-LD builders
-		hooks/                  # useTime, useMousePosition
-		utils/                  # cn() class-name helper
-	types/                    # Shared app-level types + project data
+├── (pages)/                   # About, projects, and contact routes
+├── components/
+│   ├── animations/            # Motion wrappers
+│   ├── layout/                # Navigation, footer, and global effects
+│   ├── sections/              # Home page sections
+│   └── ui/                    # Reusable UI components
+├── lib/
+│   ├── config/portfolio.ts    # Edit this first: all portfolio data
+│   ├── icons.tsx              # Icon name to Lucide component registry
+│   ├── seo.ts                 # Metadata and structured-data helpers
+│   └── ...                    # Hooks and utility helpers
+├── globals.css                # Tailwind theme and custom styles
+├── layout.tsx                 # Global metadata and application shell
+├── opengraph-image.tsx        # Home page Open Graph image
+├── robots.ts                  # robots.txt generator
+└── sitemap.ts                 # sitemap.xml generator
 public/
-	projects/                 # Project images
-	heroimage.png, about.png, imagecp.png, picofme.png
+├── projects/                  # Project screenshots
+└── *.png                      # Portfolio images
 ```
-
-## Available Scripts
-
-| Command           | Description                              |
-| ----------------- | ---------------------------------------- |
-| `npm run dev`     | Start development server                 |
-| `npm run build`   | Create optimized production build        |
-| `npm run start`   | Serve the production build               |
-| `npm run lint`    | Run ESLint checks                        |
-
-## SEO Checklist Before Going Live
-
-1. Set `url` in `app/lib/config/portfolio.ts` to your real domain (this drives metadata, sitemap, and robots).
-2. Add your `GOOGLE_VERIFICATION` token to `.env.local` and verify in Google Search Console.
-4. Optionally add your `UMAMI_ID` for privacy-friendly analytics.
-5. Deploy, then submit your sitemap: `https://your-domain.com/sitemap.xml`.
 
 ## Deployment
 
-The app deploys cleanly on Vercel or any Node-compatible host.
+This is a standard Next.js application and can be deployed to Vercel or any
+Node.js-compatible host.
 
-Recommended Vercel flow:
+### Vercel
 
-1. Push the repository to GitHub.
-2. Import the project in Vercel.
-3. Add environment variables (`UMAMI_ID`, `GOOGLE_VERIFICATION`) if you use them.
-4. Build command: `npm run build` (default).
-5. Deploy and point your custom domain at the project.
+1. Push your customized project to GitHub.
+2. Import the repository into [Vercel](https://vercel.com).
+3. Add `UMAMI_ID` and `GOOGLE_VERIFICATION` under project environment
+   variables, if you use them.
+4. Deploy with the default build command: `npm run build`.
+5. Add your custom domain and update `portfolio.url` to match it.
 
-## Notes
-
-- React Compiler is enabled in `next.config.ts`.
-- Path alias `@/*` maps to the repository root (configured in `tsconfig.json`).
-- No database or API keys are needed - everything is static content.
+For another Node.js host, install dependencies, run `npm run build`, and serve
+the result with `npm run start`.
 
 ## License
 
-No license file is included. Add a `LICENSE` if you plan to publish the template publicly.
+No license file is included. Add a `LICENSE` file before redistributing or
+using this template in a project with specific licensing requirements.
+
+## Credits
+
+Template created by **[Sabin Paudel](https://sabinpaudel.com.np)**.
+
+If this template helps you build your portfolio, consider visiting the
+[original website](https://sabinpaudel.com.np).
